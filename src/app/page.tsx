@@ -44,11 +44,21 @@ export default function App() {
     }, 6000)
   }
 
+  /**
+   * Handles logging out
+   */
+  const handleLogout = () => {
+    blogService.setToken(null)
+    setUser(null)
+    window.localStorage.removeItem('loggedBlogappUser')
+  }
+
   return (
     <div>
       { user ? (
         <div>
           <p>{user.name} logged in</p>
+          <button onClick={handleLogout}>Logout</button>
         </div>
       ) : (
         <LoginForm notificationHelper={notificationHelper} setUser={setUser} />

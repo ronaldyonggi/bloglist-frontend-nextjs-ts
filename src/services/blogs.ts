@@ -9,13 +9,28 @@ const setToken = (newToken: string | null) => {
   token = null
 };
 
+// GET all blogs
 const getAll = () => {
   return axios.get<IBlog[]>(baseUrl)
 }
 
+// CREATE a blog
+const create = async (newObject: object) => {
+  // Sets token to authorization header
+  const config = {
+    headers: {
+      Authorization: token
+    }
+  }
+
+  const res = await axios.post(baseUrl, newObject, config)
+  return res
+}
+
 const exportedFunctions = {
   getAll,
-  setToken
+  setToken,
+  create
 }
 
 export default exportedFunctions;

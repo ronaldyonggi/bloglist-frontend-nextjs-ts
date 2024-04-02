@@ -4,6 +4,7 @@ import LoginForm from "@/components/LoginForm";
 import { useEffect, useState } from "react";
 import blogService from "@/services/blogs"
 import { AxiosError } from "axios";
+import BlogForm from "@/components/BlogForm";
 
 export default function App() {
   const [blogs, setBlogs] = useState<IBlog[]>([])
@@ -74,6 +75,7 @@ export default function App() {
         <div>
           <p>{user.name} logged in</p>
           <button onClick={handleLogout}>Logout</button>
+          <BlogForm addBlog={addBlog} />
         </div>
       ) : (
         <LoginForm notificationHelper={notificationHelper} setUser={setUser} />

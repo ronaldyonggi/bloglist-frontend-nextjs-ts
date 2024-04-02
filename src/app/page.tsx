@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import blogService from "@/services/blogs"
 import { AxiosError } from "axios";
 import BlogForm from "@/components/BlogForm";
+import Blog from "@/components/Blog";
 
 export default function App() {
   const [blogs, setBlogs] = useState<IBlog[]>([])
@@ -80,6 +81,14 @@ export default function App() {
       ) : (
         <LoginForm notificationHelper={notificationHelper} setUser={setUser} />
       )}
+      <ul>
+        {blogs.map(b => (
+          <Blog 
+            key={b.id}
+            blog={b}
+          />
+        ))}
+      </ul>
     </div>
   );
 }

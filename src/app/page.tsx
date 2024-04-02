@@ -3,6 +3,9 @@
 import LoginForm from "@/components/LoginForm";
 import { useEffect, useState } from "react";
 import blogService from "@/services/blogs"
+import { AxiosError } from "axios";
+import BlogForm from "@/components/BlogForm";
+import Blog from "@/components/Blog";
 
 export default function App() {
   const [blogs, setBlogs] = useState<IBlog[]>([])
@@ -53,16 +56,39 @@ export default function App() {
     window.localStorage.removeItem('loggedBlogappUser')
   }
 
+  const addBlog = async (blog: NewBlog) => {
+    try {
+      const res = await blogService.create(blog)
+      setBlogs(blogs.concat(res.data))
+      notificationHelper("Blog added successfully!", false)
+      return true // Indicates that blog creation is successful, hence input fields can be reset to blank
+    } catch (error: unknown ) {
+      if (error instanceof AxiosError) {
+        notificationHelper(error.response!.data.error, true)
+      }
+      return false // Indicates that blog creation is failed. Input fields shouldn't be reset
+    }
+  }
+
   return (
     <div>
       { user ? (
         <div>
           <p>{user.name} logged in</p>
           <button onClick={handleLogout}>Logout</button>
+          <BlogForm addBlog={addBlog} />
         </div>
       ) : (
         <LoginForm notificationHelper={notificationHelper} setUser={setUser} />
       )}
+      <ul>
+        {blogs.map(b => (
+          <Blog 
+            key={b.id}
+            blog={b}
+          />
+        ))}
+      </ul>
     </div>
   );
 }

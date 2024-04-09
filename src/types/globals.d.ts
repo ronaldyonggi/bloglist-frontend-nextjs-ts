@@ -10,7 +10,7 @@ declare global {
     userId: string
   }
 
-  type NewBlog = Omit<IBlog, 'id'>
+  type NewBlog = Omit<IBlog, 'id' | 'userId'>
 
   interface IUser {
     token: string;

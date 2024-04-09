@@ -16,5 +16,6 @@ declare global {
     token: string;
     username: string;
     name: string;
+    id: string
   }
 }

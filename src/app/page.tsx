@@ -99,6 +99,7 @@ export default function App() {
             key={b.id}
             blog={b}
             deleteBlog={deleteBlog}
+            user={user}
           />
         ))}
       </ul>

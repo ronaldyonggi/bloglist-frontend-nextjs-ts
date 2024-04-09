@@ -6,6 +6,7 @@ import blogService from "@/services/blogs"
 import { AxiosError } from "axios";
 import BlogForm from "@/components/BlogForm";
 import Blog from "@/components/Blog";
+import Notification from "@/components/Notification/Notification";
 
 export default function App() {
   const [blogs, setBlogs] = useState<IBlog[]>([])
@@ -82,6 +83,7 @@ export default function App() {
 
   return (
     <div>
+      <Notification message={notification} isError={isError}/>
       { user ? (
         <div>
           <p>{user.name} logged in</p>

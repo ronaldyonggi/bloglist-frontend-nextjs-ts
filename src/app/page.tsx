@@ -70,6 +70,16 @@ export default function App() {
     }
   }
 
+  const deleteBlog = async (id: string) => {
+    try {
+      await blogService.deleteBlog(id)
+      notificationHelper('Deleted!', false)
+      setBlogs(blogs.filter(b => b.id !== id))
+    } catch (error) {
+      notificationHelper('Something wrong with deleting blog!', true)
+    }
+  }
+
   return (
     <div>
       { user ? (
@@ -86,6 +96,7 @@ export default function App() {
           <Blog 
             key={b.id}
             blog={b}
+            deleteBlog={deleteBlog}
           />
         ))}
       </ul>

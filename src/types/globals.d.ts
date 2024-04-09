@@ -7,6 +7,7 @@ declare global {
     title: string
     author: string
     url: string
+    userId: string
   }
 
   type NewBlog = Omit<IBlog, 'id'>

@@ -6,6 +6,7 @@ import blogService from "@/services/blogs"
 import { AxiosError } from "axios";
 import BlogForm from "@/components/BlogForm";
 import Blog from "@/components/Blog";
+import Notification from "@/components/Notification/Notification";
 
 export default function App() {
   const [blogs, setBlogs] = useState<IBlog[]>([])
@@ -70,8 +71,19 @@ export default function App() {
     }
   }
 
+  const deleteBlog = async (id: string) => {
+    try {
+      await blogService.deleteBlog(id)
+      notificationHelper('Deleted!', false)
+      setBlogs(blogs.filter(b => b.id !== id))
+    } catch (error) {
+      notificationHelper('Something wrong with deleting blog!', true)
+    }
+  }
+
   return (
     <div>
+      <Notification message={notification} isError={isError}/>
       { user ? (
         <div>
           <p>{user.name} logged in</p>
@@ -86,6 +98,8 @@ export default function App() {
           <Blog 
             key={b.id}
             blog={b}
+            deleteBlog={deleteBlog}
+            user={user}
           />
         ))}
       </ul>
